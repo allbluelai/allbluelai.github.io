@@ -248,6 +248,7 @@ ga('send', 'pageview');
     <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
     <script>
         var gitment = new Gitment({
+			id: decodeURI(window.location.pathname),
             owner: 'allbluelai',
             repo: 'BlogGitcomment',
             oauth: {
