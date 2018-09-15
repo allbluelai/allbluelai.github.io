@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Python帮你找出/清理无效的微信好友 | haffner2010&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="My Hexo Blog" />
+  
+  <meta name="description" content="今天，在豆瓣看到一篇文章，受到该文章的启发，我知道一个简单的方法来清理微信中无效的好友，  日记标题是小语种字符，微信发送这个字符，程序会发生字符渲染失败，发得出去，但对方收不到。  从这段话可以看出，我们可以利用标题中的小语种字符来检测微信好友的状态，闲话少说，直接上python。 123456789101112131415161718192021222324252627282930313233">
+<meta name="keywords" content="微信,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python帮你找出&#x2F;清理无效的微信好友">
+<meta property="og:url" content="https://allbluelai.github.io/2018/09/12/wx-delete-friend/index.html">
+<meta property="og:site_name" content="haffner2010&#39;s Blog">
+<meta property="og:description" content="今天，在豆瓣看到一篇文章，受到该文章的启发，我知道一个简单的方法来清理微信中无效的好友，  日记标题是小语种字符，微信发送这个字符，程序会发生字符渲染失败，发得出去，但对方收不到。  从这段话可以看出，我们可以利用标题中的小语种字符来检测微信好友的状态，闲话少说，直接上python。 123456789101112131415161718192021222324252627282930313233">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://allbluelai.github.io/2018/09/12/wx-delete-friend/1536756099193.png">
+<meta property="og:image" content="https://allbluelai.github.io/2018/09/12/wx-delete-friend/1536756143445.png">
+<meta property="og:updated_time" content="2018-09-15T13:51:41.551Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python帮你找出&#x2F;清理无效的微信好友">
+<meta name="twitter:description" content="今天，在豆瓣看到一篇文章，受到该文章的启发，我知道一个简单的方法来清理微信中无效的好友，  日记标题是小语种字符，微信发送这个字符，程序会发生字符渲染失败，发得出去，但对方收不到。  从这段话可以看出，我们可以利用标题中的小语种字符来检测微信好友的状态，闲话少说，直接上python。 123456789101112131415161718192021222324252627282930313233">
+<meta name="twitter:image" content="https://allbluelai.github.io/2018/09/12/wx-delete-friend/1536756099193.png">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">haffner2010&#39;s Blog</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a  href="/">
+                        <i class="fa fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    
+                    <a  href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>Archives</span>
+                    </a>
+                    
+                    <a  href="/about">
+                        <i class="fa fa-user"></i>
+                        <span>About</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/logo.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        haffner2010&#39;s Blog
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        A Boy from SCNU
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="haffner2010" target="_blank" href="//allbluelai.github.io">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/allbluelai">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Jianshu" target="_blank" href="https://www.jianshu.com/u/e031670b216b">
+                            <i class="fa fa-book fa-2x"></i></a>
+                    
+                        <a title="Email" target="_blank" href="mailto://myprojtest@163.com">
+                            <i class="fa fa-envelope-o fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-wx-delete-friend" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Python帮你找出/清理无效的微信好友
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/python/">python</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-09-12
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>今天，在豆瓣看到<a href="https://www.douban.com/note/665907454/" target="_blank" rel="noopener">一篇文章</a>，受到该文章的启发，我知道一个简单的方法来清理微信中无效的好友，</p>
+<blockquote>
+<p>日记标题是小语种字符，微信发送这个字符，程序会发生字符渲染失败，<strong><em>发得出去，但对方收不到</em></strong>。</p>
+</blockquote>
+<p>从这段话可以看出，我们可以利用标题中的小语种字符来检测微信好友的状态，闲话少说，直接上python。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">@author: haffner2010</span></span><br><span class="line"><span class="string">@contact: myprojtest@163.com</span></span><br><span class="line"><span class="string">@Software: Pycharm + Python3.6</span></span><br><span class="line"><span class="string">@OS:Windows 10 64 bit</span></span><br><span class="line"><span class="string">@Site:https://allbluelai.github.io</span></span><br><span class="line"><span class="string">@file: wx_delete_friend.py</span></span><br><span class="line"><span class="string">@time: 2018/9/11 19:05</span></span><br><span class="line"><span class="string">@desc:清除微信中无效的好友</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> wxpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 登陆</span></span><br><span class="line">bot = Bot(cache_path=<span class="keyword">True</span>) <span class="comment"># 缓存登陆信息,使用默认的缓存路径 'wxpy.pkl'</span></span><br><span class="line"><span class="comment"># bot = Bot()</span></span><br><span class="line">bot.file_helper.send(<span class="string">'hello world!'</span>)</span><br><span class="line"><span class="comment"># 获取所有好友</span></span><br><span class="line">friends = bot.friends()</span><br><span class="line">friends.pop(<span class="number">0</span>) <span class="comment"># 清除自己</span></span><br><span class="line">except_list = [<span class="string">'user1'</span>,<span class="string">'user2'</span>] <span class="comment"># 排除不需要测试的好友,可以为空</span></span><br><span class="line"><span class="keyword">if</span> except_list:</span><br><span class="line">    except_friends=list(map(friends.search,except_list))</span><br><span class="line">    except_friends = reduce(<span class="keyword">lambda</span> x, y: x+ y, except_friends)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    except_friends=[]</span><br><span class="line">print(except_friends)</span><br><span class="line"><span class="keyword">for</span> friend <span class="keyword">in</span> friends:</span><br><span class="line">    <span class="keyword">if</span> friend <span class="keyword">not</span> <span class="keyword">in</span> except_friends:</span><br><span class="line">        <span class="comment"># 发送文本，判断好友是否把你拉黑或者删除</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># print(friend)</span></span><br><span class="line">            <span class="comment"># https://www.douban.com/note/665907454/</span></span><br><span class="line">            friend.send(<span class="string">'ॣ ॣ ॣ'</span>)</span><br><span class="line">            sleep(<span class="number">2</span>) <span class="comment"># 控制发送消息的频率</span></span><br><span class="line">            <span class="comment"># print('succeed!')</span></span><br><span class="line">        <span class="keyword">except</span> exceptions.ResponseError <span class="keyword">as</span> e:</span><br><span class="line">            bot.file_helper.send(<span class="string">f'<span class="subst">&#123;friend&#125;</span>:<span class="subst">&#123;e&#125;</span>'</span>)</span><br><span class="line">embed()</span><br></pre></td></tr></table></figure>
+<p>代码很简单，我就不再赘述，直接看效果：</p>
+<ol>
+<li><p>被对方拉黑与被对方删除</p>
+<p><img src="/2018/09/12/wx-delete-friend/1536756099193.png" alt="1536756099193"></p>
+<p>这个信息可以在微信的界面上看，如果收到信息，则说明你可能已经被拉黑或者被删除了。</p>
+</li>
+<li><p>发送频率太快</p>
+<p>如果sleep没有控制好则会出现以下的情况，这种情况下，我也不清楚消息是否发出了。所以，限制一下sleep比较好。</p>
+</li>
+</ol>
+<p><img src="/2018/09/12/wx-delete-friend/1536756143445.png" alt="1536756143445"></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2018年09月15日 21:51</p>
+        <p>原始链接： <a class="post-url" href="/2018/09/12/wx-delete-friend/" title="Python帮你找出/清理无效的微信好友">https://allbluelai.github.io/2018/09/12/wx-delete-friend/</a></p>
+        <footer>
+            <a href="https://allbluelai.github.io">
+                <img src="/images/logo.png" alt="haffner2010">
+                haffner2010
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://allbluelai.github.io/2018/09/12/wx-delete-friend/&title=《Python帮你找出/清理无效的微信好友》 — haffner2010's Blog&pic=https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1536768395968&di=9b3aaeb22d1c989ceee3f422dbbe9ffa&imgtype=0&src=http%3A%2F%2Fimage.yzmg.com%2F201710%2F20171028%2F2017102810284710.jpeg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://allbluelai.github.io/2018/09/12/wx-delete-friend/&title=《Python帮你找出/清理无效的微信好友》 — haffner2010's Blog&source=网站描述" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://allbluelai.github.io/2018/09/12/wx-delete-friend/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Python帮你找出/清理无效的微信好友》 — haffner2010's Blog&url=https://allbluelai.github.io/2018/09/12/wx-delete-friend/&via=https://allbluelai.github.io" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://allbluelai.github.io/2018/09/12/wx-delete-friend/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://allbluelai.github.io/2018/09/12/wx-delete-friend/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/微信/" class="color3">微信</a>
+      
+    <a href="/tags/python/" class="color2">python</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2018/09/09/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Hello World</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="https://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="https://github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2018 <a href=https://allbluelai.github.io target="_blank">haffner2010</a>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://allbluelai.github.io",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 2
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/python/">python</a><a class="category-link" href="/categories/开源项目/">开源项目</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a  href="/">
+                    <i class="fa fa-home"></i><span>Home</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/archives">
+                    <i class="fa fa-archive"></i><span>Archives</span>
+                </a>
+            </li>
+            
+            <li>
+                <a  href="/about">
+                    <i class="fa fa-user"></i><span>About</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/博客/" style="font-size: 10px;">博客</a> <a href="/tags/开源项目/" style="font-size: 10px;">开源项目</a> <a href="/tags/微信/" style="font-size: 10px;">微信</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>
