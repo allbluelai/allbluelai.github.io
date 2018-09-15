@@ -3,10 +3,9 @@
 
 
     
-    
   <url>
-    <loc>https://allbluelai.github.io/2018/09/09/installation-configuration/</loc>
-    <lastmod>2018-09-13T14:23:35.025Z</lastmod>
+    <loc>https://allbluelai.github.io/undefined/title.html</loc>
+    <lastmod>2018-09-15T13:51:41.556Z</lastmod>
     <data>
         <display>
         <title>Github+Hexo+MiHo-个人Blog配置详情</title>
@@ -27,11 +26,11 @@
 
     
   <url>
-    <loc>https://allbluelai.github.io/2018/09/12/wx-delete-friend/</loc>
-    <lastmod>2018-09-13T14:23:23.089Z</lastmod>
+    <loc>https://allbluelai.github.io/undefined/title.html</loc>
+    <lastmod>2018-09-15T13:51:41.551Z</lastmod>
     <data>
         <display>
-        <title>清除微信中无效的好友</title>
+        <title>Python帮你找出/清理无效的微信好友</title>
         <pubTime>2018-09-11T16:00:00.000Z</pubTime>
         
         <tag>微信</tag>
@@ -49,8 +48,8 @@
 
     
   <url>
-    <loc>https://allbluelai.github.io/2018/09/09/hello-world/</loc>
-    <lastmod>2018-09-13T14:06:10.873Z</lastmod>
+    <loc>https://allbluelai.github.io/undefined/title.html</loc>
+    <lastmod>2018-09-15T13:51:41.545Z</lastmod>
     <data>
         <display>
         <title>Hello World</title>
@@ -62,5 +61,6 @@
     </data>
     </url>
 
+    
     
 </urlset>
