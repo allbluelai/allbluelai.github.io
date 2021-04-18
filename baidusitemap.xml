@@ -4,30 +4,8 @@
 
     
   <url>
-    <loc>https://allbluelai.github.io/2018/09/09/installation-configuration/</loc>
-    <lastmod>2019-06-09T13:31:20.263Z</lastmod>
-    <data>
-        <display>
-        <title>Github+Hexo+MiHo-个人Blog配置详情</title>
-        <pubTime>2018-09-08T16:00:00.000Z</pubTime>
-        
-        <tag>博客</tag>
-         
-        <tag>开源项目</tag>
-         
-         
-           
-             
-              <breadCrumb title="开源项目" url="https://allbluelai.github.io/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://allbluelai.github.io/2018/09/12/wx-delete-friend/</loc>
-    <lastmod>2018-09-15T13:51:41.551Z</lastmod>
+    <lastmod>2021-04-18T13:37:54.089Z</lastmod>
     <data>
         <display>
         <title>Python帮你找出/清理无效的微信好友</title>
@@ -48,12 +26,34 @@
 
     
   <url>
-    <loc>https://allbluelai.github.io/2018/09/09/hello-world/</loc>
+    <loc>https://allbluelai.github.io/2018/09/09/installation-configuration/</loc>
+    <lastmod>2021-04-18T13:22:22.687Z</lastmod>
+    <data>
+        <display>
+        <title>Github+Hexo+MiHo-个人Blog配置详情</title>
+        <pubTime>2018-09-08T16:00:00.000Z</pubTime>
+        
+        <tag>博客</tag>
+         
+        <tag>开源项目</tag>
+         
+         
+           
+             
+              <breadCrumb title="开源项目" url="https://allbluelai.github.io/categories/%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://allbluelai.github.io/2021/04/18/hello-world/</loc>
     <lastmod>2018-09-15T13:51:41.545Z</lastmod>
     <data>
         <display>
         <title>Hello World</title>
-        <pubTime>2018-09-09T02:52:38.078Z</pubTime>
+        <pubTime>2021-04-18T12:44:39.095Z</pubTime>
         
          
            
